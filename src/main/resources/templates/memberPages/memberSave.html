@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>memberSave</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #save-form{
+            width: 800px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="save-form">
+    <form action="/member/save" method="post" name="saveForm">
+        <input type="text" name="memberEmail" id="memberEmail" placeholder="이메일" class="form-control" onblur="dupCheck()">
+        <span id="email-dup-check"></span>
+        <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control">
+        <input type="text" name="memberName" placeholder="이름" class="form-control">
+        <input type="text" name="memberAge" placeholder="나이" class="form-control">
+        <input type="text" name="memberPhone" placeholder="전화번호" class="form-control">
+        <input type="submit" value="회원가입" class="btn btn-primary">
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    const dupCheck = () => {
+        const email = document.getElementById("memberEmail").value;
+        const checkResult = document.getElementById("email-dup-check");
+        axios({
+            method: "post",
+            url: "/member/dup-check",
+            params: {inputEmail: email}
+        }).then(res => {
+            console.log("then 함수");
+            console.log(res);
+        }).catch(res => {
+            console.log("catch 함수");
+            console.log(res);
+        })
+
+
+        // $.ajax({
+            //     type: "post",
+            //     url: "/member/dup-check",
+            //     data: {inputEmail: email},
+            //     dataType: "text",
+            //     success: function (result){
+            //         // if (result == "ok"){
+            //             checkResult.innerHTML = "사용할 수 있는 이메일입니다";
+            //             checkResult.style.color = "green";
+            //         // } else {
+            //         //     checkResult.innerHTML = "사용할 수 없는 이메일입니다";
+            //         //     checkResult.style.color = "red";
+            //         // }
+            //     },
+            //     error: function () {
+            //         console.log("실패");
+            //         checkResult.innerHTML = "사용할 수 없는 이메일입니다";
+            //         checkResult.style.color = "red";
+            //     }
+            //
+            // });
+
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
